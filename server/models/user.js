@@ -93,6 +93,8 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
  */
 userSchema.methods.generateToken = function(callback) {
   var user = this;
+  
+  // generate a token
   var token = jwt.sign(user._id.toHexString(), process.env.SECRET);
 
   user.token = token;
@@ -103,6 +105,27 @@ userSchema.methods.generateToken = function(callback) {
     callback(null, user);
   });
 };
+
+/**
+ * ======================
+ *  CUSTOM STATICS METHODS
+ * ======================
+ * Query the database to get the user by the given token
+ */
+userSchema.statics.findByToken = function(token, callback) {
+  var user = this;
+
+  // decode the token to retrive the user._id
+  jwt.verify(token, process.env.SECRET, function(err, decode) {
+    // checking the decoded token is valid
+    // if valid, will return the user back
+    user.findOne({"_id": decode, "token": token}, function(err, user) {
+      if (err) return callback(err)
+      callback(null, user)
+    })
+  })
+
+}
 
 const User = mongoose.model('User', userSchema);
 

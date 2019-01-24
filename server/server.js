@@ -11,6 +11,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE);
 
 /** MIDDLEWARE */
+const { auth } = require('./middleware/auth');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -19,6 +21,19 @@ app.use(cookieParser());
 const { User } = require('./models/user');
 
 /** ROUTES */
+app.get('/api/users/auth', auth, (req, res) => {
+  res.status(200).json({
+    isAuth: true,
+    isAdmin: req.user.role === 0 ? false : true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    cart: req.user.cart,
+    history: req.user.history
+  });
+});
+
 // Register user
 app.post('/api/users/register', (req, res) => {
   const user = new User(req.body);
@@ -35,7 +50,6 @@ app.post('/api/users/register', (req, res) => {
 
 // Login user
 app.post('/api/users/login', (req, res) => {
-
   // 1. find the email to check whether the user exist
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user)
@@ -48,23 +62,21 @@ app.post('/api/users/login', (req, res) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
         return res.json({ loginSuccess: false, message: 'Wrong password' });
-        
-        
+
       // 3. generate a token if password is matched to database
       user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err)
+        if (err) return res.status(400).send(err);
 
-        // 4. Set the cookie if token is generated 
-        res.cookie('c_auth', user.token).status(200).json({
-          loginSuccess: true
-        })
-      })
+        // 4. Set the cookie if token is generated
+        res
+          .cookie('c_auth', user.token)
+          .status(200)
+          .json({
+            loginSuccess: true
+          });
+      });
     });
-
-    
-
   });
-
 });
 
 /** LISTENING PORT */
