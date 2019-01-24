@@ -6,17 +6,25 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-/** database configuration */
+/** DATABASE CONFIG */
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE);
 
-/** middleware */
+/** MIDDLEWARE */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const port = process.env.PORT || 3001;
+/** MODELS */
+const { User } = require('./models/user');
 
+/** ROUTES */
+app.post('/api/users/register', (req, res) => {
+  res.status(200);
+});
+
+/** LISTENING PORT */
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);
 });
