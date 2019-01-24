@@ -22,4 +22,12 @@ let auth = (req, res, next) => {
   });
 };
 
-module.exports = { auth };
+// checking the admin role
+let authAdmin = (req, res, next) => {
+  if (req.user.role === 0) {
+    return res.json({ message: 'Permission denied' })
+  }
+  next()
+}
+
+module.exports = { auth, authAdmin };

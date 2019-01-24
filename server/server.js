@@ -6,21 +6,80 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+/** DATABASE MODELS IMPORT */
+const { User } = require('./models/user');
+const { Brand } = require('./models/brand');
+const { Type } = require('./models/type');
+
 /** DATABASE CONFIG */
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE);
 
 /** MIDDLEWARE */
-const { auth } = require('./middleware/auth');
+const { auth, authAdmin } = require('./middleware/auth');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-/** MODELS */
-const { User } = require('./models/user');
+/**
+ * ROUTES
+ */
 
-/** ROUTES */
+//=====================
+//       TYPE
+//=====================
+
+// Create new type (authentication and admin role is needed)
+app.post('/api/product/type', auth, authAdmin, (req, res) => {
+  const type = new Type(req.body);
+  type.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({
+      success: true,
+      type: doc
+    });
+  });
+});
+
+// Get all types
+app.get('/api/product/types', (req, res) => {
+  Type.find({}, (err, types) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(types);
+  });
+});
+
+
+//=====================
+//       BRAND
+//=====================
+
+// Create new brand (authentication and admin role is needed)
+app.post('/api/product/brand', auth, authAdmin, (req, res) => {
+  const brand = new Brand(req.body);
+  brand.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({
+      sucess: true,
+      brand: doc
+    });
+  });
+});
+
+// Get all brands
+app.get('/api/product/brands', (req, res) => {
+  Brand.find({}, (err, brands) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(brands);
+  });
+});
+
+//=====================
+//       USER
+//=====================
+
+// Authenticate user
 app.get('/api/users/auth', auth, (req, res) => {
   res.status(200).json({
     isAuth: true,
@@ -75,6 +134,17 @@ app.post('/api/users/login', (req, res) => {
             loginSuccess: true
           });
       });
+    });
+  });
+});
+
+// Logout user - only authenticated user can logout
+app.get('/api/users/logout', auth, (req, res) => {
+  // access database to unset the token
+  User.findOneAndUpdate({ _id: req.user._id }, { token: '' }, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true
     });
   });
 });
