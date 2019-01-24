@@ -10,7 +10,7 @@ require('dotenv').config();
 const { User } = require('./models/user');
 const { Brand } = require('./models/brand');
 const { Type } = require('./models/type');
-const { Product } = require('./models/product')
+const { Product } = require('./models/product');
 
 /** DATABASE CONFIG */
 mongoose.Promise = global.Promise;
@@ -27,22 +27,35 @@ app.use(cookieParser());
  * ROUTES
  */
 
-
 //=====================
 //       PRODUCTS
 //=====================
-// Get product by IDs 
+
+// Get product by IDs
+// sample: /api/product/product_by_id?id=89jfkl,jkl81&type=array
 app.get('/api/product/product_by_id', (req, res) => {
-  let type = req.query.type 
-  let items = req.query.id
+  let type = req.query.type;
+  let items = req.query.id;
 
-  if(type ==="array") {
-    let ids = req.query.id.split(',')
-    items = []
-    items = ids.map(item=>{})
+  // if query type="array" is attached
+  if (type === 'array') {
+    let ids = req.query.id.split(',');
+    items = [];
+    // covert the id to mongoose objectid and put them in array
+    items = ids.map(item => {
+      return mongoose.Types.ObjectId(item);
+    });
   }
-})
 
+  // fetch products by the id array (items)
+  Product
+    .find({ _id: { $in: items } })
+    .populate('brand')
+    .populate('type')
+    .exec((err, docs) => {
+      return res.status(200).send(docs);
+    });
+});
 
 // Create new product (authentication and admin role is needed)
 app.post('/api/product/product', auth, authAdmin, (req, res) => {
@@ -63,7 +76,6 @@ app.get('/api/product/products', (req, res) => {
     res.status(200).send(products);
   });
 });
-
 
 //=====================
 //       TYPE
@@ -88,7 +100,6 @@ app.get('/api/product/types', (req, res) => {
     res.status(200).send(types);
   });
 });
-
 
 //=====================
 //       BRAND

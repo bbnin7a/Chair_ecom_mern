@@ -33,7 +33,7 @@ const productSchema = mongoose.Schema({
   },
   type: {
     type: Schema.Types.ObjectId,
-    ref: 'Wood',
+    ref: 'Type',
     required: true
   },
   footStep: {
