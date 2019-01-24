@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const typeSchema = mongoose.Schema({
   name: {
@@ -7,8 +7,8 @@ const typeSchema = mongoose.Schema({
     unique: 1,
     maxlength: 100
   }
-})
+});
 
-const Type = mongoose.model('Type', typeSchema)
+const Type = mongoose.model('Type', typeSchema);
 
-module.exports = {Type}
+module.exports = { Type };

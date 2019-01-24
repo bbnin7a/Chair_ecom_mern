@@ -10,6 +10,7 @@ require('dotenv').config();
 const { User } = require('./models/user');
 const { Brand } = require('./models/brand');
 const { Type } = require('./models/type');
+const { Product } = require('./models/product')
 
 /** DATABASE CONFIG */
 mongoose.Promise = global.Promise;
@@ -25,6 +26,44 @@ app.use(cookieParser());
 /**
  * ROUTES
  */
+
+
+//=====================
+//       PRODUCTS
+//=====================
+// Get product by IDs 
+app.get('/api/product/product_by_id', (req, res) => {
+  let type = req.query.type 
+  let items = req.query.id
+
+  if(type ==="array") {
+    let ids = req.query.id.split(',')
+    items = []
+    items = ids.map(item=>{})
+  }
+})
+
+
+// Create new product (authentication and admin role is needed)
+app.post('/api/product/product', auth, authAdmin, (req, res) => {
+  const product = new Product(req.body);
+  product.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({
+      success: true,
+      product: doc
+    });
+  });
+});
+
+// Get all products
+app.get('/api/product/products', (req, res) => {
+  Product.find({}, (err, products) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(products);
+  });
+});
+
 
 //=====================
 //       TYPE
