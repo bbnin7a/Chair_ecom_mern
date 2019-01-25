@@ -1,5 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+/** STYLING */
+import 'normalize.css/normalize.css'
+import './styles/styles.scss'
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>,
+  document.getElementById('root')
+);

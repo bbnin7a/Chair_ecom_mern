@@ -1,0 +1,48 @@
+html {
+  font-size: 62.5%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: $grey-default;
+  font-family: 'Oswald', sans-serif;
+  font-size: $m-size;
+  line-height: 1.6;
+}
+
+// container
+.container {
+  width: 110rem;
+  margin: 0 auto;
+}
+
+.page-container {
+  min-height: 75vh;
+  padding-top: 8.5rem;
+}
+
+// Background
+.bck-b__light {
+  background: $grey-light;
+}
+
+.bck-b__dark {
+  background: $grey-dark;
+}
+
+
+
+// button {
+//   cursor: pointer;
+// }
+
+// button:disabled {
+//   cursor: default;
+// }
+ 
+// .is-active {
+//   font-weight: bold;
+// }

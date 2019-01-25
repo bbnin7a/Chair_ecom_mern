@@ -1,0 +1,51 @@
+.footer__container {
+
+}
+
+.footer__logo {
+  text-align: center;
+  font-family: 'Monoton', cursive;
+  color: $white;
+  font-size: 4rem;
+  padding: 1.1rem 0rem;
+  border-bottom: 1px solid #4d4d4d;
+}
+
+.footer__wrapper {
+  display: flex;
+  color: #828282;
+}
+
+.footer__right {
+  h2 {
+    text-transform: uppercase;
+  }
+}
+
+
+.footer__left,
+.footer__right {
+  flex: 1;
+}
+
+.footer__info {
+  display: flex;
+  flex-wrap: wrap;
+
+  .tag {
+   flex-grow: 1;
+    position: relative;
+    width: 50%;
+    margin-bottom: 3rem;
+  }
+
+  .icon {
+    position: absolute;
+    font-size: 2.6rem;
+    top: 1rem;
+  }
+
+  .info {
+    padding-left: 4rem;
+  }
+}
