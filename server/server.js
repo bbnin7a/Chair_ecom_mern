@@ -31,6 +31,29 @@ app.use(cookieParser());
 //       PRODUCTS
 //=====================
 
+// Get products with sorting, limiting
+// sample: /api/product/products?sortBy=createdAt&order=desc&limit=4
+// sample: /api/product/products?sortBy=sold&order=desc&limit=4
+app.get('/api/product/products', (req, res) => {
+
+  // checking: if query not exist, will given the default value
+  let order = req.query.order ? req.query.order : 'asc';
+  let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
+  let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+
+  console.log(order);
+
+  Product.find()
+    .populate('brand')
+    .populate('type')
+    .sort([[sortBy, order]])
+    .limit(limit)
+    .exec((err, products) => {
+      if (err) return res.status(400).send(err);
+      res.send(products);
+    });
+});
+
 // Get product by IDs
 // sample: /api/product/product_by_id?id=89jfkl,jkl81&type=array
 app.get('/api/product/product_by_id', (req, res) => {
@@ -48,8 +71,7 @@ app.get('/api/product/product_by_id', (req, res) => {
   }
 
   // fetch products by the id array (items)
-  Product
-    .find({ _id: { $in: items } })
+  Product.find({ _id: { $in: items } })
     .populate('brand')
     .populate('type')
     .exec((err, docs) => {
@@ -70,12 +92,12 @@ app.post('/api/product/product', auth, authAdmin, (req, res) => {
 });
 
 // Get all products
-app.get('/api/product/products', (req, res) => {
-  Product.find({}, (err, products) => {
-    if (err) return res.status(400).send(err);
-    res.status(200).send(products);
-  });
-});
+// app.get('/api/product/products', (req, res) => {
+//   Product.find({}, (err, products) => {
+//     if (err) return res.status(400).send(err);
+//     res.status(200).send(products);
+//   });
+// });
 
 //=====================
 //       TYPE
