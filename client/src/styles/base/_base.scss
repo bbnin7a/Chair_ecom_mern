@@ -13,6 +13,11 @@ body {
   line-height: 1.6;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 // container
 .container {
   width: 110rem;
@@ -21,6 +26,11 @@ body {
 
 .page-container {
   min-height: 75vh;
+  padding-top: 8.5rem;
+}
+
+// wrapper
+.page-wrapper {
   padding-top: 8.5rem;
 }
 
@@ -34,6 +44,16 @@ body {
 }
 
 
+// Form
+input {
+  font-size: 1.5rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem 1rem;
+  width: 100%;
+  margin: 1rem 0 0 0;
+}
+
 
 // button {
 //   cursor: pointer;
@@ -42,7 +62,7 @@ body {
 // button:disabled {
 //   cursor: default;
 // }
- 
+
 // .is-active {
 //   font-weight: bold;
 // }

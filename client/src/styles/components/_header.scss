@@ -22,13 +22,13 @@ header {
 
 .header__right {
   flex-grow: 1;
-  border-left: 1px solid $white-less;
-  border-right: 1px solid $white-less;
+  border-left: 1px solid $white-2;
+  border-right: 1px solid $white-2;
 }
 
 .header__top {
-  color:#c9c9c9;
-  border-bottom: 1px solid #ffffff;
+  color: $grey-light-2;
+  border-bottom: 1px solid $white;
 }
 
 .header__top,
@@ -36,7 +36,7 @@ header {
   text-transform: uppercase;
   font-weight: 700;
   text-align: right;
-  color:#ffffff;
+  color: $white;
   font-size: 15px;
   padding: 10px 20px;
 }

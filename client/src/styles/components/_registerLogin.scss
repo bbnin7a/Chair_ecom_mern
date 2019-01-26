@@ -1,0 +1,32 @@
+.register-login-container {
+  display: flex;
+  border: 1px solid $grey-light;
+  border-top: 5px solid $grey-light;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 8rem 0rem 11rem 0rem;
+  padding: 3rem;
+  min-height: 43rem;
+
+  h2 {
+    margin: 2rem 0rem;
+    text-transform: uppercase;
+    color: $grey-m-dark;
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 1.6rem;
+    width: 90%;
+  }
+
+}
+
+.register-login-container__left,
+.register-login-container__right {
+  flex: 1;
+}
+
+.login__wrapper {
+  
+}
