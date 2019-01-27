@@ -1,5 +1,6 @@
 /**
  * Input field validation
+ * Rules checking: 1) Required, 2) Email, 3)
  * @param {Object} element the updated input element carrying new data
  * @param {Array} formData formData array pass by state
  * @returns {Array} error[result(bool), message(string)]
@@ -7,6 +8,18 @@
 export const validate = (element, formData = []) => {
   // error array init: [bool, string]
   let error = [true, ''];
+
+  // ** Check confirmPassword is equal to its ref (e.g. password)
+  if (element.validation.confirm) {
+    // Comparing confirmPassword's value and password's value
+    const valid =
+      element.value.trim() === formData[element.validation.confirm].value;
+    // set a message depends on valid result
+    const message = `${!valid ? 'Passwords do not match' : ''}`;
+
+    // update new error array
+    error = !valid ? [valid, message] : error;
+  }
 
   // ** Check required
   if (element.validation.required) {
@@ -75,7 +88,6 @@ export const update = (element, formData, formName) => {
   return newFormData;
 };
 
-
 /**
  * Prepare a new data object to submit
  * @param {Array} formData formData array pass by state
@@ -83,33 +95,35 @@ export const update = (element, formData, formName) => {
  * @returns {Object} e.g.{email: "abc@gmail.com", password: "password123"}
  */
 export const generateData = (formData, formName) => {
-  let dataToSubmit = {}
+  let dataToSubmit = {};
 
   // loop through the array
-  for(let key in formData) {
-    dataToSubmit[key] = formData[key].value
+  for (let key in formData) {
+
+    // inject the data except the confirmPassword value
+    if (key !== 'confirmPassword') {
+      dataToSubmit[key] = formData[key].value;
+    }
   }
 
-  return dataToSubmit
-
-}
+  return dataToSubmit;
+};
 
 /**
  * Ensure all the input's value is valid before submission
- * Function is called from submitForm() 
+ * Function is called from submitForm()
  * @param {Array} formData formData array pass by state
  * @param {string} formName name of the form
  * @returns {Bool}
  */
 export const isFormValid = (formData, formName) => {
-
-  let formIsValid = true
+  let formIsValid = true;
 
   // loop through the formData array
-  // to ensure 'EVERY' inputs element has the 'valid' field equal to true 
-  for(let key in formData) {
-    formIsValid = formData[key].valid && formIsValid
+  // to ensure 'EVERY' inputs element has the 'valid' field equal to true
+  for (let key in formData) {
+    formIsValid = formData[key].valid && formIsValid;
   }
 
-  return formIsValid
-}
+  return formIsValid;
+};

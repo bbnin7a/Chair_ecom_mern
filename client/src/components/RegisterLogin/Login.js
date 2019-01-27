@@ -9,14 +9,14 @@ import { loginUser } from '../../actions/userActions';
 class Login extends Component {
   state = {
     formError: false,
-    formSuccess: '',
+    formSuccess: false,
     formData: {
       email: {
         element: 'input',
         value: '',
         config: {
           name: 'email_input',
-          type: 'email',
+          type: 'text',
           placeholder: 'Enter your email'
         },
         validation: {
@@ -98,7 +98,7 @@ class Login extends Component {
           <button onClick={event => this.submitForm(event)}>log in</button>
 
           {this.state.formError ? (
-            <div className="error-label" style={{ marginTop: '1rem' }}>
+            <div className="error-label mt-sm">
               Please check your inputs
             </div>
           ) : null}
