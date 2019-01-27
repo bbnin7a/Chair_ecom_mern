@@ -2,7 +2,7 @@ import React from 'react'
 import UserLayout from '../../components/HOC/UserLayout'
 import Button from '../utils/Button'
 
-const UserDashoard = () => {
+const UserDashoard = ({user}) => {
   return (
     <UserLayout>
       <div> 
@@ -10,9 +10,9 @@ const UserDashoard = () => {
         <div className="user-info-panel">
           <h1>User information</h1>
           <div>
-            <span>name</span>
-            <span>lastname</span>
-            <span>email</span>
+            <span>{user.userData.name}</span>
+            <span>{user.userData.lastname}</span>
+            <span>{user.userData.email}</span>
           </div>
           <Button 
             type="default"

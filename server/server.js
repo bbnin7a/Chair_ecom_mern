@@ -214,9 +214,9 @@ app.post('/api/users/login', (req, res) => {
 app.get('/api/users/logout', auth, (req, res) => {
   // access database to unset the token
   User.findOneAndUpdate({ _id: req.user._id }, { token: '' }, (err, doc) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.json({ logoutSuccess: false, err });
     return res.status(200).json({
-      success: true
+      logoutSuccess: true
     });
   });
 });

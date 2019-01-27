@@ -3,6 +3,15 @@ header {
   z-index: 999;
   width: 100%;
   border-bottom: 1px solid $white;
+
+  a {
+    margin-left: 2rem;
+    transition: 1s cubic-bezier(0.02, 0.80, 0.2, 1);
+  }
+
+  a:hover {
+    color: $yellow;
+  }
 }
 
 .header__container {
@@ -31,12 +40,37 @@ header {
   border-bottom: 1px solid $white;
 }
 
+.header__bottom {
+  color: $white;
+}
+
 .header__top,
 .header__bottom {
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
   text-align: right;
-  color: $white;
   font-size: 15px;
   padding: 10px 20px;
+}
+
+.header__cartLink {
+  display: inline-block;
+  position: relative;
+
+  span {
+    position: absolute;
+    background: red;
+    top: 0.2rem;
+    color: #ffff;
+    left: -0.8rem;
+    border-radius: 50%;
+    padding: 0 0.7rem 0.2rem 0.7rem;
+    font-size: 1.2rem;
+  }
+}
+
+.header__logout-link {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 20px;
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { USER_SERVER } from '../components/utils/misc';
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from './types';
+import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from './types';
 
 /**
  * Action - Login User
@@ -44,6 +44,21 @@ export const authUser = () => {
 
   return {
     type: AUTH_USER,
+    payload: request
+  };
+};
+
+
+/**
+ * Action - Logout User
+ */
+export const logoutUser = () => {
+  const request = axios
+    .get(`${USER_SERVER}/logout`)
+    .then(res => res.data);
+
+  return {
+    type: LOGOUT_USER,
     payload: request
   };
 };
