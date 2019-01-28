@@ -1,3 +1,5 @@
+// card block
+
 .card-block {
   margin: 11rem 0;
 
@@ -14,60 +16,8 @@
   }
 }
 
-.card-item__wrapper {
-  flex-grow: 1;
-  width: 25%;
-  padding: 0 20px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-item__image {
-  width: 100%;
-  height: 28rem;
-  background-position: center !important;
-  background-size: cover !important;
-  border: 1px solid $white-5;
-}
-
-.card-item__actions {
-  display: flex;
-  padding: 1.5rem 0 1rem 0;
-
-  > :nth-child(1) {
-    flex-grow: 1;
-    padding-right: 10px;
-  }
-}
-
-.card-item {
-  display: flex;
-  padding: 1.5rem 0 1rem 0;
-
-  &__tags {
-    margin: 0 auto;
-    position: relative;
-
-    > div {
-      text-align: center;
-      margin: 0.5rem;
-    }
-  }
-
-  &__brand {
-    font-size: 1.9rem;
-    font-weight: 300;
-    color: $grey-m-dark;
-  }
-
-  &__name {
-    font-size: 2rem;
-    font-weight: 500;
-  }
-
-  &__price {
-    font-weight: 300;
-    font-size: 2rem;
-  }
+.card-block--shop .card-item__wrapper {
+  float: left;
+  width: 33.33%;
+  margin-bottom: 2rem;
 }

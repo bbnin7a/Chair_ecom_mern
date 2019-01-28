@@ -7,8 +7,14 @@ import {
   getProductsToShop
 } from '../../actions/productsActions';
 
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faBars from '@fortawesome/fontawesome-free-solid/faBars';
+import faTh from '@fortawesome/fontawesome-free-solid/faTh';
+
 // custom fixed variable
 import { FOOTSTEP, PRICE } from '../utils/Form/fixed_categories';
+
+import LoadMoreCards from './LoadMoreCards';
 
 import CollapseCheckBox from '../utils/CollapseCheckBox';
 import CollapseRadio from '../utils/CollapseRadio';
@@ -16,7 +22,7 @@ import CollapseRadio from '../utils/CollapseRadio';
 class Shop extends Component {
   state = {
     grid: '',
-    limit: 6,
+    limit: 3,
     skip: 0,
     filters: {
       brand: [],
@@ -70,6 +76,13 @@ class Shop extends Component {
     });
   };
 
+  // toggle the products display mode option
+  handleGrid = () => {
+    this.setState({
+      grid: !this.state.grid ? 'grid-mode' : ''
+    });
+  };
+
   // Re-fetch new list of products when the newFilters changed/updated
   // skip = 0, as the whole list should be new generated
   // and won't skip any products
@@ -81,14 +94,40 @@ class Shop extends Component {
       });
   };
 
+  // keep to original products list and get more products
+  //  by increasing the skip
+  // will re-refetch the remaining list from server
+  loadMoreCards = () => {
+    let skip = this.state.skip + this.state.limit;
+
+    this.props
+      .dispatch(
+        getProductsToShop(
+          skip,
+          this.state.limit,
+          this.state.filters,
+          this.props.products.toShop
+        )
+      )
+      .then(() => {
+        // update the new state of 'skip'
+        this.setState({
+          skip
+        });
+      });
+  };
+
   render() {
     const { products } = this.props;
-    console.log(this.state.filters)
+
     return (
       <div>
         <PageTop title="Browse Product" />
         <div className="container">
           <div className="shop__wrapper">
+            {
+              ///////// Left side bar for filtering ///////////
+            }
             <div className="shop__wrapper__left">
               <CollapseCheckBox
                 initState={true}
@@ -117,7 +156,39 @@ class Shop extends Component {
                 handleFilters={filters => this.handleFilters(filters, 'price')}
               />
             </div>
-            <div className="shop__wrapper__right">2</div>
+
+            {
+              ///////// Right for displaying products card ///////////
+            }
+            <div className="shop__wrapper__right">
+              <div className="display-options clear">
+                <div
+                  className={`display-options__btn ${
+                    this.state.grid ? '' : 'active'
+                  }`}
+                  onClick={() => this.handleGrid()}
+                >
+                  <FontAwesomeIcon icon={faTh} />
+                </div>
+                <div
+                  className={`display-options__btn ${
+                    this.state.grid ? 'active' : ''
+                  }`}
+                  onClick={() => this.handleGrid()}
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </div>
+              </div>
+              <div>
+                <LoadMoreCards
+                  grid={this.state.grid}
+                  limit={this.state.limit}
+                  size={products.toShopSize}
+                  products={products.toShop}
+                  loadMore={() => this.loadMoreCards()}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

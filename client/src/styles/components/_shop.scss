@@ -9,3 +9,19 @@
     width: 80rem;
   }
 }
+ 
+.display-options {
+  border-bottom: 1px solid $white-3;
+  margin: 0 2rem 2rem 2rem;
+
+  &__btn {
+    float: right;
+    padding: 1rem 1rem;
+    font-size: 2rem;
+    color: $grey-light-2;
+  }
+
+  .active {
+    color: $grey-m-dark;
+  }
+}

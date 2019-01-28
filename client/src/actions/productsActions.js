@@ -49,6 +49,7 @@ export const getProductsBySell = () => {
  * @param {number} skip
  * @param {nubmer} limit 
  * @param {Object} filters { brand: [string], footStep: [string], price: [number, number]}
+ * @param {Array} previousState the current state of products list 
  */
 export const getProductsToShop = (
   skip,
@@ -59,9 +60,17 @@ export const getProductsToShop = (
   const data = { limit, skip, filters };
 
   const request = axios.post(`${PRODUCT_SERVER}/shop`, data).then(res => {
+
+    // Merge current state of product(if have) list 
+    // with new fetched products
+    let accumulatedProducts =[
+      ...previousState,
+      ...res.data.products
+    ]
+
     return {
       size: res.data.size,
-      products: res.data.products
+      products: accumulatedProducts
     };
   });
 

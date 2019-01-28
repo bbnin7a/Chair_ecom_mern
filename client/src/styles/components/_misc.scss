@@ -1,0 +1,29 @@
+// load more button
+.load-more__container {
+  clear: both;
+  margin-bottom: 5rem;
+  padding-top: 2rem;
+
+  span {
+    cursor: pointer;
+    background: $white-2;
+    color: $grey-dark-2;
+    font-size: 1.8rem;
+    padding: 1rem 6rem;
+    display: table;
+    margin: 0 auto;
+    transition: 100ms ease-in;
+  }
+
+  span:hover {
+    background: $grey-dark-2;
+    color: $white-2;
+  }
+}
+
+
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
+}
