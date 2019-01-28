@@ -1,24 +1,39 @@
 /**
  * CUSTOM BUTTON
  * =============
- * > Reuse component
- * > Type of button:
- * > Props: linkTo, addStyles, type, title
  */
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faShoppingBasket from '@fortawesome/fontawesome-free-solid/faShoppingBasket'
 
 const Button = props => {
-
   // return an customized button depends on receiving props
   const renderButton = () => {
     let template = '';
-    
+
     // check the type of button
     switch (props.type) {
       case 'default':
-        template = <Link className="button--link-default" to={props.linkTo} {...props.addStyles}>{props.title}</Link>;
+        template = (
+          <Link
+            className={
+              !props.altClass ? 'button--link-default' : props.altClass
+            }
+            to={props.linkTo}
+            {...props.addStyles}
+          >
+            {props.title}
+          </Link>
+        );
+        break;
+      case 'bag_link':
+        template = (
+          <div className="button--link-bag" onClick={props.runAction}>
+            <FontAwesomeIcon icon={faShoppingBasket}/>
+          </div>
+        );
         break;
       default:
         template = '';
@@ -27,7 +42,7 @@ const Button = props => {
     return template;
   };
 
-  return <div className="button--link">{renderButton()}</div>;
+  return <div>{renderButton()}</div>;
 };
 
 export default Button;

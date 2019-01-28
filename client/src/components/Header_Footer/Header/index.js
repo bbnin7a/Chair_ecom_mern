@@ -120,7 +120,7 @@ class Header extends Component {
       <header className="bck-b__light">
         <div className="header__container container">
           <div className="header__left">
-            <div className="header__logo">CHAIR</div>
+            <div className="header__logo"><Link to="/">CHAIR</Link></div>
           </div>
           <div className="header__right">
             <div className="header__top">{this.showLinks(this.state.user)}</div>

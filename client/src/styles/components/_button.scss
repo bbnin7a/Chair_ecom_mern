@@ -1,11 +1,11 @@
 button {
   cursor: pointer;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 1rem;
   background: #e1ddc3;
-  margin-top: 10px;
+  margin-top: 1rem;
   font-family: 'Oswald', sans-serif;
-  font-size: 16px;
+  font-size: 1.6rem;
 }
 
 .button--link {
@@ -18,4 +18,25 @@ button {
   display: table;
   background: $brown-light;
   margin-top: 1rem;
+}
+
+.button--link-card,
+.button--link-bag {
+  width: 100%;
+  border: 1px solid #dcdcdc;
+  padding: 0.5rem 1rem;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: $grey-light-2;
+  background: $white-3;
+  transition: all 100ms ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background: $grey-light;
+    color: $white;
+  }
 }
