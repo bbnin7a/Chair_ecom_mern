@@ -6,7 +6,6 @@ header {
 
   a {
     margin-left: 2rem;
-    transition: 1s cubic-bezier(0.02, 0.80, 0.2, 1);
   }
 
   a:hover {
@@ -73,4 +72,8 @@ header {
   cursor: pointer;
   display: inline-block;
   margin-left: 20px;
+
+  &:hover {
+    color: $yellow;
+  }
 }

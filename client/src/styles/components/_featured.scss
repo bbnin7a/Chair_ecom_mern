@@ -1,0 +1,33 @@
+.featured__container {
+}
+
+.featured__image {
+  position: relative;
+  background-size: cover !important;
+  background-position: center left !important;
+}
+
+.featured__action {
+  position: absolute;
+  top: 45%;
+  left: 8%;
+
+  .tag {
+    background: rgba(60, 60, 60, 0.9);
+    color: $white;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    display: table;
+  }
+}
+
+.featured__title {
+  font-size: 7rem;
+  font-weight: 700;
+}
+
+.featured__sub-title {
+  font-size: 5rem;
+  font-weight: 300;
+  margin-top: 1rem;
+}

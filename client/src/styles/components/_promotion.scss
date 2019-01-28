@@ -1,0 +1,37 @@
+.promotion__container {
+}
+
+.promotion__image {
+  height: 40rem;
+  background-size: cover !important;
+  background-position: top center !important;
+  padding: 7.3rem;
+  box-sizing: border-box;
+}
+
+.promotion__action {
+  .tag {
+    background: rgba(60, 60, 60, 0.9);
+    color: #ffffff;
+    padding: 0px 20px;
+    text-transform: uppercase;
+    display: table;
+  }
+
+  a {
+    margin: 1rem auto;
+  }
+}
+
+.promotion__title {
+  font-size: 7rem;
+  font-weight: 700;
+  margin: 10px auto;
+}
+
+.promotion__sub-title {
+  font-size: 5rem;
+  font-weight: 300;
+  margin-top: 1rem;
+  margin: 0 auto;
+}
