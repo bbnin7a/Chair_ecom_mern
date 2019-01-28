@@ -1,0 +1,11 @@
+.shop__wrapper {
+  display:flex;
+
+  &__left {
+    flex-grow: 1;
+  }
+
+  &__right {
+    width: 80rem;
+  }
+}

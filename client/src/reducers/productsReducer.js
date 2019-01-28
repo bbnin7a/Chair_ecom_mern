@@ -1,4 +1,9 @@
-import { GET_PRODUCT_BY_SELL, GET_PRODUCT_BY_ARRIVAL } from '../actions/types';
+import {
+  GET_PRODUCT_BY_SELL, 
+  GET_PRODUCT_BY_ARRIVAL,
+  GET_BRANDS,
+  GET_TYPES
+} from '../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -6,6 +11,10 @@ export default (state = {}, action) => {
       return { ...state, bySell: action.payload};
     case GET_PRODUCT_BY_ARRIVAL:
       return { ...state, byArrival: action.payload};
+    case GET_BRANDS:
+      return {...state, brands: action.payload}
+    case GET_TYPES:
+      return {...state, types: action.payload}
     default:
       return state;
   }

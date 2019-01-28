@@ -23,13 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-/**
- * ROUTES
- */
+/** ROUTES */
 
-//=====================
-//       PRODUCTS
-//=====================
+/////////////////////////////////////////
+//////      PRODUCTS ROUTE
+/////////////////////////////////////////
 
 // Get products with sorting, limiting
 // sample: /api/product/products?sortBy=createdAt&order=desc&limit=4
@@ -99,9 +97,9 @@ app.post('/api/product/product', auth, authAdmin, (req, res) => {
 //   });
 // });
 
-//=====================
-//       TYPE
-//=====================
+/////////////////////////////////////////
+//////      TYPE ROUTE
+/////////////////////////////////////////
 
 // Create new type (authentication and admin role is needed)
 app.post('/api/product/type', auth, authAdmin, (req, res) => {
@@ -123,9 +121,9 @@ app.get('/api/product/types', (req, res) => {
   });
 });
 
-//=====================
-//       BRAND
-//=====================
+/////////////////////////////////////////
+//////      BRAND ROUTE
+/////////////////////////////////////////
 
 // Create new brand (authentication and admin role is needed)
 app.post('/api/product/brand', auth, authAdmin, (req, res) => {
@@ -147,9 +145,9 @@ app.get('/api/product/brands', (req, res) => {
   });
 });
 
-//=====================
-//       USER
-//=====================
+/////////////////////////////////////////
+//////      USER ROUTE
+/////////////////////////////////////////
 
 // Authenticate user
 app.get('/api/users/auth', auth, (req, res) => {

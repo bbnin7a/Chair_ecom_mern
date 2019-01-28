@@ -3,9 +3,15 @@ import axios from 'axios';
 import { PRODUCT_SERVER } from '../components/utils/misc';
 import { 
   GET_PRODUCT_BY_SELL,
-  GET_PRODUCT_BY_ARRIVAL
+  GET_PRODUCT_BY_ARRIVAL,
+  GET_BRANDS,
+  GET_TYPES
  } from './types';
 
+
+/////////////////////////////////////////
+//////        PRODUCTS
+/////////////////////////////////////////
 
 /**
  * Action - 
@@ -38,3 +44,30 @@ export const getProductsBySell = () => {
     payload: request
   };
 };
+
+
+/////////////////////////////////////////
+//////        CATEGORIES
+/////////////////////////////////////////
+
+export const getBrands = () => {
+  const request = axios
+    .get(`${PRODUCT_SERVER}/brands`)
+    .then(res => res.data);
+
+  return {
+    type: GET_BRANDS,
+    payload: request
+  };
+}
+
+export const getTypes = () => {
+  const request = axios
+    .get(`${PRODUCT_SERVER}/types`)
+    .then(res => res.data);
+
+  return {
+    type: GET_TYPES,
+    payload: request
+  };
+}

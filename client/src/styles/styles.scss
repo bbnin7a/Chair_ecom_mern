@@ -1,6 +1,7 @@
 @import './base/settings';
 @import './base/base';
 @import './base/util';
+@import './components/page';
 @import './components/header';
 @import './components/footer';
 @import './components/button';
@@ -12,3 +13,5 @@
 @import './components/featured';
 @import './components/promotion';
 @import './components/card';
+@import './components/shop';
+@import './components/collapseFilters';
