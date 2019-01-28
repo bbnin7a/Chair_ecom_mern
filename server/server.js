@@ -29,17 +29,60 @@ app.use(cookieParser());
 //////      PRODUCTS ROUTE
 /////////////////////////////////////////
 
+// Fetch products with criteria (POST)
+// Criterias:
+// {number}limit, {number}skip, {Object}filters(brands:[], types:[], prices:[])
+
+app.post('/api/product/shop', (req, res) => {
+  // checking: if query not exist, will given the default value
+  let order = req.body.order ? req.body.order : 'desc';
+  let sortBy = req.body.sortBy ? req.body.sortBy : '_id';
+  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let skip = parseInt(req.body.skip);
+  let findArgs = {};
+
+  // sorting the filter data to fit mongodb query
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      // filter.price value (ref): [0, 499]
+      // mongo docs (update operators)
+      // https://docs.mongodb.com/manual/reference/operator/update/
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1]
+        };
+      } else {
+        // default case
+        findArgs[key] = req.body.filters[key];
+      }
+    }
+  }
+
+  Product.find(findArgs)
+    .populate('brand')
+    .populate('type')
+    .sort([[sortBy, order]])
+    .skip(skip)
+    .limit(limit)
+    .exec((err, products) => {
+      console.log(products);
+      if (err) return res.status(400).send(err);
+      res.status(200).json({
+        size: products.length,
+        products
+      });
+    });
+});
+
 // Get products with sorting, limiting
 // sample: /api/product/products?sortBy=createdAt&order=desc&limit=4
 // sample: /api/product/products?sortBy=sold&order=desc&limit=4
 app.get('/api/product/products', (req, res) => {
-
   // checking: if query not exist, will given the default value
   let order = req.query.order ? req.query.order : 'asc';
   let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
   let limit = req.query.limit ? parseInt(req.query.limit) : 100;
-
-  console.log(order);
 
   Product.find()
     .populate('brand')
