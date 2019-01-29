@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import faShoppingBasket from '@fortawesome/fontawesome-free-solid/faShoppingBasket'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faShoppingBasket from '@fortawesome/fontawesome-free-solid/faShoppingBasket';
 
 const Button = props => {
   // return an customized button depends on receiving props
@@ -30,8 +30,15 @@ const Button = props => {
         break;
       case 'bag_link':
         template = (
-          <div className="button--link-bag" onClick={props.runAction}>
-            <FontAwesomeIcon icon={faShoppingBasket}/>
+          <div className="button--link-bag" onClick={()=> props.runAction()}>
+            <FontAwesomeIcon icon={faShoppingBasket} />
+          </div>
+        );
+        break;
+      case 'add_to_cart_link':
+        template = (
+          <div className="button--link--addtocart" onClick={()=> props.runAction()}>
+            <FontAwesomeIcon icon={faShoppingBasket} /> Add to cart
           </div>
         );
         break;

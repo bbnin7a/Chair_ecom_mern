@@ -12,7 +12,7 @@
   height: 28rem;
   background-position: center !important;
   background-size: cover !important;
-  border: 1px solid $white-5;
+  // border: 1px solid $white-5;
 }
 
 .card-tiem__tags {
@@ -72,11 +72,9 @@
     width: 26rem;
     height: 211px;
     border: none;
-    // flex-grow: 1
   }
 
   .card-item__container {
-    // flex-grow: 3;
     width: 50rem;
     border: 1px solid $white-3;
   }

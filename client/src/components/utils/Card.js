@@ -5,7 +5,8 @@
 
 import React, { Component } from 'react';
 import Button from '../utils/Button';
-import TextTruncate from 'react-text-truncate'
+import TextTruncate from 'react-text-truncate';
+import { Link } from 'react-router-dom';
 
 export default class Card extends Component {
   // render card images
@@ -23,12 +24,14 @@ export default class Card extends Component {
     const props = this.props;
     return (
       <div className={`card-item__wrapper ${props.grid}`}>
-        <div
-          className="card-item__image"
-          style={{
-            background: `url(${this.renderCardImage(props.images)}) no-repeat`
-          }}
-        />
+        <Link to={`/product_detail/${props._id}`}>
+          <div
+            className="card-item__image"
+            style={{
+              background: `url(${this.renderCardImage(props.images)}) no-repeat`
+            }}
+          />
+        </Link>
         <div className="card-item__container">
           <div className="card-item__tags">
             <div className="card-item__brand">{props.brand.name}</div>
@@ -42,7 +45,11 @@ export default class Card extends Component {
                 line={3}
                 truncateText=" ..."
                 text={props.description}
-                textTruncateChild={<a href="#" className="read-more">Read more</a>}
+                textTruncateChild={
+                  <a href="#" className="read-more">
+                    Read more
+                  </a>
+                }
               />
             </div>
           ) : null}

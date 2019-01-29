@@ -4,18 +4,49 @@ import { PRODUCT_SERVER } from '../components/utils/misc';
 import {
   GET_PRODUCT_BY_SELL,
   GET_PRODUCT_BY_ARRIVAL,
+  GET_PRODUCT_PRODUCT_DETAIL,
   GET_BRANDS,
   ADD_BRAND,
   GET_TYPES,
   ADD_TYPE,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
-  CLEAR_PRODUCT
+  CLEAR_PRODUCT,
+  CLEAR_PRODUCT_DETAIL
 } from './types';
 
 /////////////////////////////////////////
 //////        PRODUCTS
 /////////////////////////////////////////
+
+/**
+ * Fetch single product detail (GET)
+ * query sample: /api/product/product_by_id?id=89jfkl,jkl81&type=single
+ */
+export const getProductDetail = prodId => {
+  const request = axios
+    .get(`${PRODUCT_SERVER}/product_by_id?id=${prodId}&type=single`)
+    .then(res => {
+      // get the first result
+      return res.data[0];
+    });
+
+  return {
+    type: GET_PRODUCT_PRODUCT_DETAIL,
+    payload: request
+  };
+};
+
+/**
+ * Clear product detail (GET)
+ * query sample: /api/product/product_by_id?id=89jfkl,jkl81&type=single
+ */
+export const clearProductDetail = () => {
+  return {
+    type: CLEAR_PRODUCT_DETAIL,
+    payload: ''
+  };
+};
 
 /**
  * Fetch all products by 'arrival' to filter newly arrival products
@@ -138,7 +169,7 @@ export const addBrand = (dataToSubmit, existingBrands) => {
         success: res.data.success,
         brands
       };
-    })
+    });
 
   return {
     type: ADD_BRAND,
@@ -175,7 +206,7 @@ export const addType = (dataToSubmit, existingTypes) => {
         success: res.data.success,
         types
       };
-    })
+    });
 
   return {
     type: ADD_TYPE,
