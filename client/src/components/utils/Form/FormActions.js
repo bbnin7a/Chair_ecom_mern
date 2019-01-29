@@ -99,7 +99,6 @@ export const generateData = (formData, formName) => {
 
   // loop through the array
   for (let key in formData) {
-
     // inject the data except the confirmPassword value
     if (key !== 'confirmPassword') {
       dataToSubmit[key] = formData[key].value;
@@ -127,3 +126,47 @@ export const isFormValid = (formData, formName) => {
 
   return formIsValid;
 };
+
+/**
+ * Populate the fetched result (ie. options) to formData
+ * @param {Object} formData  state of formData contains lots of input elements
+ * @param {Array} arrayData list of objects{key, value}, e.g. brand, type,.. fetched from the server
+ * @param {string} field the target field
+ * @returns {Object} newFormData
+ */
+export const populateOptionField = (formData, arrayData = [], field) => {
+  const newArray = [];
+  const newFormData = { ...formData };
+
+  // loop through the arrayData, and push each element to newArray
+  arrayData.forEach(item => {
+    newArray.push({ key: item._id, value: item.name });
+  });
+
+  // put back the new arrayData to target field element
+  // then return the whole formData, will be 
+  newFormData[field].config.options = newArray
+  return newFormData
+};
+
+
+/**
+ * Reset the formData 
+ * @param {Object} formData  state of formData contains lots of input elements
+ * @param {string} formName name of the form
+ * @returns {Object} newFormData
+ */
+
+export const resetFields = (formData, formName) => {
+  const newFormData = {...formData}
+
+  for (let key in newFormData) {
+    newFormData[key].value = ''
+    newFormData[key].valid = false
+    newFormData[key].touched = false
+    newFormData[key].validationMessage = ''
+  }
+
+  return newFormData
+
+}

@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import Button from '../utils/Button';
+import TextTruncate from 'react-text-truncate'
 
 export default class Card extends Component {
   // render card images
@@ -37,7 +38,12 @@ export default class Card extends Component {
 
           {props.grid ? (
             <div className="card-item__description">
-              <p>{props.description}</p>
+              <TextTruncate
+                line={3}
+                truncateText=" ..."
+                text={props.description}
+                textTruncateChild={<a href="#" className="read-more">Read more</a>}
+              />
             </div>
           ) : null}
 

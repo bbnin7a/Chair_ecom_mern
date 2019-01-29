@@ -9,27 +9,22 @@
 import React from 'react';
 
 const FormField = ({ formData, change, id }) => {
-
   // Function to render Error message (if needed)
   const showError = () => {
-    let errorMessage = null
-  
+    let errorMessage = null;
+
     // check current the state of validation
     if (formData.validation && !formData.valid) {
-      errorMessage= (
-        <div className="error-label">
-          {formData.validationMessage}
-        </div>
-      )
+      errorMessage = (
+        <div className="error-label">{formData.validationMessage}</div>
+      );
     }
 
-    return errorMessage
+    return errorMessage;
+  };
 
-  }
-  
   // Function to render the input element
   const renderTemplate = () => {
-
     // default
     let formTemplate = null;
 
@@ -38,6 +33,9 @@ const FormField = ({ formData, change, id }) => {
       case 'input':
         formTemplate = (
           <div className="form-block">
+            {formData.showLabel ? (
+              <div className="label-inputs">{formData.config.label}</div>
+            ) : null}
             <input
               {...formData.config}
               value={formData.value}
@@ -47,9 +45,47 @@ const FormField = ({ formData, change, id }) => {
             {showError()}
           </div>
         );
-
         break;
 
+      case 'select':
+        formTemplate = (
+          <div className="form-block">
+            {formData.showLabel ? (
+              <div className="label-inputs">{formData.config.label}</div>
+            ) : null}
+            <select
+              value={formData.value}
+              onBlur={event => change({ event, id, blur: true })}
+              onChange={event => change({ event, id })}
+            >
+              <option value="">Select one</option>
+              {formData.config.options.map(item => (
+                <option key={item.key} value={item.key}>
+                  {item.value}
+                </option>
+              ))}
+            </select>
+            {showError()}
+          </div>
+        );
+        break;
+
+      case 'textarea':
+        formTemplate = (
+          <div className="form-block">
+            {formData.showLabel ? (
+              <div className="label-inputs">{formData.config.label}</div>
+            ) : null}
+            <textarea
+              {...formData.config}
+              value={formData.value}
+              onBlur={event => change({ event, id, blur: true })}
+              onChange={event => change({ event, id })}
+            />
+            {showError()}
+          </div>
+        );
+        break;
       default:
         formTemplate = null;
     }

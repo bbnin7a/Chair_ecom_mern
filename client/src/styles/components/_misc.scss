@@ -27,3 +27,12 @@
   display: block;
   clear: both;
 }
+
+.read-more {
+  color: $grey-light;
+  font-size: 1.4rem;
+  
+  &:hover {
+    color: $grey-m-dark;
+  }
+}

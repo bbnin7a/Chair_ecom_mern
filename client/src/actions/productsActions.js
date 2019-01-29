@@ -6,7 +6,9 @@ import {
   GET_PRODUCT_BY_ARRIVAL,
   GET_BRANDS,
   GET_TYPES,
-  GET_PRODUCTS_TO_SHOP
+  GET_PRODUCTS_TO_SHOP,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT
 } from './types';
 
 /////////////////////////////////////////
@@ -78,7 +80,32 @@ export const getProductsToShop = (
     type: GET_PRODUCTS_TO_SHOP,
     payload: request
   };
-};
+};    
+
+/**
+ * Create new product
+ * @param {Object} dataToSubmit
+ */
+export const addProduct = dataToSubmit => {
+  const request = axios.post(`${PRODUCT_SERVER}/product`, dataToSubmit)
+    .then(res => res.data)
+
+  return {
+    type: ADD_PRODUCT,
+    payload: request
+  }
+}
+
+/**
+ * Create new product
+ */
+export const clearProduct = () => {
+  return {
+    type: CLEAR_PRODUCT,
+    payload: ''
+  }
+}
+
 
 /////////////////////////////////////////
 //////        CATEGORIES

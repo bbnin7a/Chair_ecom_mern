@@ -1,5 +1,5 @@
 .block {
-  flex-grow: 1
+  flex-grow: 1;
 }
 
 .form-block {
@@ -7,7 +7,7 @@
 }
 
 .form-block--two {
-  display:flex;
+  display: flex;
 
   > div:nth-child(1) {
     padding-right: 1rem;
@@ -20,6 +20,27 @@
 
 .error-label {
   color: $red-orange;
-  display:block;
+  display: block;
   font-size: 1.5rem;
+}
+
+.label-inputs {
+  display: inline-block;
+  // background: #999592;
+  font-size: 2rem;
+  text-transform: capitalize;
+  color: $grey-dark;
+  margin: 2rem 0 1rem 0;
+}
+
+.form-divider {
+  border-bottom: 3px solid $grey-light-2;
+  margin: 40px 0px;
+}
+
+.form-success {
+  background: #4caf50;
+  color: #ffffffff;
+  padding: 10px;
+  display: block;
 }

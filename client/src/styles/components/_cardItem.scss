@@ -69,13 +69,15 @@
   display: flex;
 
   .card-item__image {
-    width: 23rem;
+    width: 26rem;
     height: 211px;
     border: none;
+    // flex-grow: 1
   }
 
   .card-item__container {
-    flex-grow: 1;
+    // flex-grow: 3;
+    width: 50rem;
     border: 1px solid $white-3;
   }
 

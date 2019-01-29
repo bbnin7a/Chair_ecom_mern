@@ -3,7 +3,9 @@ import {
   GET_PRODUCT_BY_ARRIVAL,
   GET_BRANDS,
   GET_TYPES,
-  GET_PRODUCTS_TO_SHOP
+  GET_PRODUCTS_TO_SHOP,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -22,7 +24,16 @@ export default (state = {}, action) => {
         toShop: action.payload.products,
         toShopSize: action.payload.size
       };
-
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        addProduct: action.payload
+      };
+    case CLEAR_PRODUCT:
+      return {
+        ...state,
+        addProduct: action.payload
+      };
     default:
       return state;
   }

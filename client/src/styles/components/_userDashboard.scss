@@ -7,6 +7,11 @@
 .user-container__left {
   // border-right: 1px solid $white-3; 
 
+  h2 {
+    margin: 4rem 0 1rem 0;
+    color: $grey-m-dark;
+  }
+
   .links a {
     display: block;
     border-bottom: 1px solid $white-4;
