@@ -1,0 +1,100 @@
+
+// dropzone in admin page
+.dropzone {
+  border: 1px solid #e5e5e5;
+  margin-bottom: 40px;
+}
+
+.dropzone-box__wrapper {
+  float: left;
+  width: 25%;
+  height: 160px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.dropzone-box {
+  position: relative;
+  background: $white-2;
+  height: 100%;
+  text-align: center;
+  padding-top: 31px;
+  box-sizing: border-box;
+  font-size: 49px;
+  background-size: contain !important;
+  background-position: center center !important;
+  border: 1px solid $white-2;
+
+  > svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  > svg[data-icon='plus-circle'] {
+    color: $grey-light;
+    transition: 100ms ease-in-out;
+  }
+
+  > svg[data-icon='times-circle'] {
+    color: $red-orange;
+  }
+}
+
+.dropzone-box:hover {
+  &:after {
+    transition: 100ms ease-in-out;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: $white-3;
+  }
+
+  > svg[data-icon='plus-circle'] {
+    color: $grey-m-dark;
+  }
+  > svg[data-icon='times-circle'] {
+    color: $red-orange;
+  }
+}
+
+//// WITH UPLOADING ATTACHED ////
+.dropzone-box.uploading {
+  background-color: $white-3;
+}
+
+
+///// WITH REMOVE ATTACHED ////
+.dropzone-box.remove {
+  position: relative;
+}
+
+.remove svg {
+  opacity: 0;
+  font-size: 4rem;
+  color: $grey-m-dark;
+  position: relative;
+  transition: 100ms ease-in-out;
+  z-index: 1;
+}
+
+.dropzone-box.remove:hover {
+  &:after {
+    transition: 100ms ease-in-out;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  svg {
+    opacity: 1;
+  }
+}

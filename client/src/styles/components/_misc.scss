@@ -21,7 +21,6 @@
   }
 }
 
-
 .clear:after {
   content: '';
   display: block;
@@ -31,7 +30,7 @@
 .read-more {
   color: $grey-light;
   font-size: 1.4rem;
-  
+
   &:hover {
     color: $grey-m-dark;
   }

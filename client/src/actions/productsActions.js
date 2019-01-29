@@ -97,7 +97,7 @@ export const addProduct = dataToSubmit => {
 }
 
 /**
- * Create new product
+ * Clear the addProduct in redux store
  */
 export const clearProduct = () => {
   return {

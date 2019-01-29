@@ -10,6 +10,8 @@ import {
   resetFields
 } from '../../utils/Form/FormActions';
 
+import FileUpload from '../../utils/FileUpload';
+
 import { connect } from 'react-redux';
 import {
   getBrands,
@@ -175,6 +177,16 @@ class AddProduct extends Component {
         touched: false,
         validationMessage: '',
         showLabel: true
+      },
+      images: {
+        value: [],
+        validation: {
+          required: false
+        },
+        valid: true,
+        touched: false,
+        validationMessage: '',
+        showLabel: false
       }
     }
   };
@@ -222,27 +234,30 @@ class AddProduct extends Component {
   };
 
   // called when the form submit success
-  // will reset all the field 
+  // will reset all the field
   resetFieldHandler = () => {
-    const newFormData = resetFields(this.state.formData, 'products')
-    
-    // update the state of formData to empty 
+    const newFormData = resetFields(this.state.formData, 'products');
+
+    // update the state of formData to empty
     // and set the success to true
     this.setState({
       formSuccess: true,
       formData: newFormData
-    })
+    });
 
     // after 3s, success message will be gon
     // and dispatch action clear the addProduct in redux store
     setTimeout(() => {
-      this.setState({
-        formSuccess: false
-      }, () => {
-        this.props.dispatch(clearProduct())
-      })
-    }, 3000)
-  }
+      this.setState(
+        {
+          formSuccess: false
+        },
+        () => {
+          this.props.dispatch(clearProduct());
+        }
+      );
+    }, 3000);
+  };
 
   // handle the form submission
   submitForm = event => {
@@ -255,7 +270,7 @@ class AddProduct extends Component {
     if (formIsValid) {
       this.props.dispatch(addProduct(dataToSubmit)).then(() => {
         if (this.props.products.addProduct.success) {
-          this.resetFieldHandler()
+          this.resetFieldHandler();
         } else {
           this.setState({ formError: true });
         }
@@ -268,12 +283,30 @@ class AddProduct extends Component {
     }
   };
 
+  // update the state of images field
+  imagesHandler = images => {
+    const newFormData = { ...this.state.formData };
+
+    newFormData['images'].value = images
+    newFormData['images'].valid = true
+
+    this.setState({
+      formData: newFormData
+    })
+    
+  };
+
   render() {
     return (
       <UserLayout>
         <div>
           <h1>Add Product</h1>
           <form onSubmit={event => this.submitForm(event)}>
+            <FileUpload
+              imagesHandler={images => this.imagesHandler(images)}
+              reset={this.state.formSuccess}
+            />
+
             <FormField
               id={'name'}
               formData={this.state.formData.name}
@@ -333,7 +366,6 @@ class AddProduct extends Component {
               change={element => this.updateForm(element)}
             />
 
-            
             <div>
               <button onClick={event => this.submitForm(event)}>
                 Add product
@@ -346,9 +378,8 @@ class AddProduct extends Component {
               ) : null}
 
               {this.state.formSuccess ? (
-              <div className="form-success mt-md">Success</div>
-            ) : null}
-
+                <div className="form-success mt-md">Success</div>
+              ) : null}
             </div>
           </form>
         </div>
