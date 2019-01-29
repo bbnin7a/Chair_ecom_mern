@@ -11,6 +11,7 @@ import Shop from './components/Shop'
 
 import UserDashboard from './components/User';
 import AddProduct from './components/User/Admin/AddProduct';
+import ManageCategories from './components/User/Admin/ManageCategories';
 
 // Auth(comp, auth level)
 const Routes = () => {
@@ -19,6 +20,7 @@ const Routes = () => {
       <Switch>
         <Route path="/user/dashboard" exact component={Auth(UserDashboard, true)} />
         <Route path="/admin/add_product" exact component={Auth(AddProduct, true)} />
+        <Route path="/admin/manage_categories" exact component={Auth(ManageCategories, true)} />
 
         <Route path="/register" exact component={Auth(Register, false)} />
         <Route path="/register_login" exact component={Auth(RegisterLogin, false)} />

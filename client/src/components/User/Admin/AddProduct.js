@@ -235,7 +235,7 @@ class AddProduct extends Component {
 
   // called when the form submit success
   // will reset all the field
-  resetFieldHandler = () => {
+  resetFieldsHandler = () => {
     const newFormData = resetFields(this.state.formData, 'products');
 
     // update the state of formData to empty
@@ -270,7 +270,7 @@ class AddProduct extends Component {
     if (formIsValid) {
       this.props.dispatch(addProduct(dataToSubmit)).then(() => {
         if (this.props.products.addProduct.success) {
-          this.resetFieldHandler();
+          this.resetFieldsHandler();
         } else {
           this.setState({ formError: true });
         }
