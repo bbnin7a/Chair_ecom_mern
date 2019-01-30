@@ -1,7 +1,4 @@
-const { User } = require('../models/user');
-const { Product } = require('../models/product');
 const { Type } = require('../models/type');
-const { Brand } = require('../models/brand');
 
 // ** Create new type (authentication and admin role is needed) (POST)
 exports.createProductType = (req, res) => {
