@@ -301,7 +301,7 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
-// *** Add product to cart
+// *** Add product to cart (POST)
 // sample: /api/users/addToCart?productId=qwe8123984uklj
 app.post('/api/users/addToCart', auth, (req, res) => {
   const userId = req.user._id;
@@ -353,6 +353,107 @@ app.post('/api/users/addToCart', auth, (req, res) => {
       );
     }
   });
+});
+
+// *** Decrease product qty by 1 to cart (POST)
+// sample: /api/users/cartItemQtyDecrease?productId=qwe8123984uklj
+app.post('/api/users/cartItemQtyDecrease', auth, (req, res) => {
+  const userId = req.user._id;
+  const prodId = req.query.productId;
+
+  // get the user data
+  User.findOne({ _id: userId }, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+
+    doc.cart.forEach(item => {
+      if (item.id == prodId) {
+        // case 1) check the quantity, if quantity is >1
+        if (item.quantity > 1) {
+          User.findOneAndUpdate(
+            { _id: userId, 'cart.id': mongoose.Types.ObjectId(prodId) },
+            { $inc: { 'cart.$.quantity': -1 } },
+            { new: true },
+            (err, doc) => {
+              // reconstruct the response data
+              let cart = doc.cart;
+              let array = cart.map(item => {
+                return mongoose.Types.ObjectId(item.id);
+              });
+
+              // get the cartDetail from mongoose
+              Product.find({ _id: { $in: array } })
+                .populate('brand')
+                .populate('type')
+                .exec((err, cartDetail) => {
+                  return res.status(200).json({
+                    cartDetail,
+                    cart
+                  });
+                });
+
+              // if (err) return res.json({ success: false, err });
+              // res.status(200).json(doc.cart);
+            }
+          );
+        } else {
+          // case 2) remove this item in cart
+          User.findOneAndUpdate(
+            { _id: req.user._id },
+            { $pull: { cart: { id: mongoose.Types.ObjectId(prodId) } } },
+            { new: true },
+            (err, doc) => {
+              // reconstruct the response data
+              let cart = doc.cart;
+              let array = cart.map(item => {
+                return mongoose.Types.ObjectId(item.id);
+              });
+
+              // get the cartDetail from mongoose
+              Product.find({ _id: { $in: array } })
+                .populate('brand')
+                .populate('type')
+                .exec((err, cartDetail) => {
+                  return res.status(200).json({
+                    cartDetail,
+                    cart
+                  });
+                });
+            }
+          );
+        }
+      }
+    });
+  });
+});
+
+// *** Remove cart item (GET)
+// sample: /api/user/removeFromCart?productid=jkl18ujio1
+app.get('/api/users/removeFromCart', auth, (req, res) => {
+  const prodId = req.query.productId;
+
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { cart: { id: mongoose.Types.ObjectId(prodId) } } },
+    { new: true },
+    (err, doc) => {
+      // reconstruct the response data
+      let cart = doc.cart;
+      let array = cart.map(item => {
+        return mongoose.Types.ObjectId(item.id);
+      });
+
+      // get the cartDetail from mongoose
+      Product.find({ _id: { $in: array } })
+        .populate('brand')
+        .populate('type')
+        .exec((err, cartDetail) => {
+          return res.status(200).json({
+            cartDetail,
+            cart
+          });
+        });
+    }
+  );
 });
 
 /** LISTENING PORT */

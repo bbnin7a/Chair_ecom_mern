@@ -54,13 +54,28 @@ class Header extends Component {
     });
   };
 
+  caculateCartItems = (cart) => {
+    let total = 0
+
+    if (cart.length > 0) {
+      cart.forEach(item => {
+         total += item.quantity
+      })
+    }
+    
+    return total
+  }
+
   // render the special cart link with qty indicator
   renderCartLink = (item, i) => {
     const user = this.props.user.userData;
 
     return (
       <div className="header__cartLink" key={i}>
-        <span>{user.cart ? user.cart.length : 0}</span>
+        <span>{user.cart ? 
+          this.caculateCartItems(user.cart)
+
+         : 0}</span>
         <Link to={item.linkTo}>{item.name}</Link>
       </div>
     );

@@ -49,9 +49,7 @@ class Card extends Component {
                 truncateText=" ..."
                 text={props.description}
                 textTruncateChild={
-                  <a href="#" className="read-more">
-                    Read more
-                  </a>
+                  <Link to={`/product_detail/${props._id}`} className="read-more">Read more</Link>
                 }
               />
             </div>
