@@ -14,7 +14,23 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Collapse from '@material-ui/core/Collapse';
+import { withStyles } from '@material-ui/core/styles';
 
+// styling material-ui checkbox
+const checkBoxStyles = theme => ({
+  root: {
+    '&$checked': {
+      color: '#55efc4',
+    },
+  },
+  checked: {},
+ })
+
+ const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
+
+ /**
+  * Collapse Checkbox component
+  */
 export default class CollapseCheckBox extends Component {
   state = {
     open: false,
@@ -76,8 +92,9 @@ export default class CollapseCheckBox extends Component {
           <ListItem key={item._id} style={{ padding: '10px 0' }}>
             <ListItemText primary={item.name} className="collapse-items__title"/>
             <ListItemSecondaryAction>
-              <Checkbox
-                color="primary"
+              <CustomCheckbox
+                labelStyle={{ color: '#55efc4'}}
+                iconStyle={{ fill: '#55efc4'}}
                 onChange={() => this.handleCheckBoxToggle(item._id)}
                 checked={this.state.checked.indexOf(item._id) !== -1}
               />

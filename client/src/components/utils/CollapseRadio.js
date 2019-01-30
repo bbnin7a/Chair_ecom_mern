@@ -1,7 +1,3 @@
-/**
- * RADIO COMPONENT
- * see: https://material-ui.com/demos/lists/
- */
 import React, { Component } from 'react';
 
 import FontAwesome from '@fortawesome/react-fontawesome';
@@ -16,6 +12,23 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import { withStyles } from '@material-ui/core/styles';
+
+// styling material-ui checkbox
+const radioStyles = theme => ({
+  root: {
+    '&$checked': {
+      color: '#55efc4'
+    }
+  },
+  checked: {}
+});
+const CustomRadio = withStyles(radioStyles)(Radio);
+
+
+/**
+ * Collapse Radio Component
+ */
 class CollapseRadio extends Component {
   state = {
     open: false,
@@ -51,7 +64,7 @@ class CollapseRadio extends Component {
           <FormControlLabel
             key={item._id}
             value={`${item._id}`}
-            control={<Radio />}
+            control={<CustomRadio />}
             label={item.name}
             className="collapse-items__title"
           />
