@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node server/server.js",
-    "server" : "nodemon server/server.js",
-    "client" : "npm run start --prefix client",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build"
   },
@@ -22,7 +22,7 @@
     "cloudinary": "^1.11.0",
     "concurrently": "^3.6.0",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^6.0.0",
+    "dotenv": "^6.2.0",
     "express": "^4.16.3",
     "express-formidable": "^1.0.0",
     "jsonwebtoken": "^8.3.0",

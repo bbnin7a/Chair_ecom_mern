@@ -9,9 +9,6 @@ import {
 import UserLayout from '../HOC/UserLayout';
 import UserProductBlock from '../utils/User/ProductBlock';
 
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faFrown from '@fortawesome/fontawesome-free-solid/faFrown';
-
 class UserCart extends Component {
   state = {
     loading: true,
