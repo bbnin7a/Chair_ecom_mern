@@ -9,7 +9,7 @@ import Button from '../utils/Button';
 import TextTruncate from 'react-text-truncate';
 
 import { connect } from 'react-redux'
-import { addToCart } from '../../actions/productsActions'
+import { addToCart } from '../../actions/userActions'
 
 class Card extends Component {
   // render card images
@@ -73,7 +73,13 @@ class Card extends Component {
               <Button
                 type="bag_link"
                 runAction={() => {
-                  console.log('added to card');
+
+                  // only autheticated user is able 
+                  // to add product to cart
+                  props.user.userData.isAuth?
+                    this.props.dispatch(addToCart(props._id))
+                  :
+                  console.log('Please login')
                 }}
               />
             </div>
@@ -90,4 +96,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect()(Card)
+export default connect(mapStateToProps)(Card)

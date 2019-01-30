@@ -1,10 +1,16 @@
 import axios from 'axios';
 
 import { USER_SERVER } from '../components/utils/misc';
-import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from './types';
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER,
+  ADD_TO_CART_USER
+} from './types';
 
 /**
- * Action - Login User
+ * Login User
  * @param {Object} dataToSubmit
  */
 export const loginUser = dataToSubmit => {
@@ -19,7 +25,7 @@ export const loginUser = dataToSubmit => {
 };
 
 /**
- * Action - Register a User
+ * Register a User
  * @param {Object} dataToSubmit
  */
 export const registerUser = dataToSubmit => {
@@ -33,14 +39,11 @@ export const registerUser = dataToSubmit => {
   };
 };
 
-
 /**
- * Action - Authicate a User
+ * Authicate a User
  */
 export const authUser = () => {
-  const request = axios
-    .get(`${USER_SERVER}/auth`)
-    .then(res => res.data);
+  const request = axios.get(`${USER_SERVER}/auth`).then(res => res.data);
 
   return {
     type: AUTH_USER,
@@ -48,17 +51,28 @@ export const authUser = () => {
   };
 };
 
-
 /**
- * Action - Logout User
+ * Logout User
  */
 export const logoutUser = () => {
-  const request = axios
-    .get(`${USER_SERVER}/logout`)
-    .then(res => res.data);
+  const request = axios.get(`${USER_SERVER}/logout`).then(res => res.data);
 
   return {
     type: LOGOUT_USER,
+    payload: request
+  };
+};
+
+/**
+ * Add product to cart
+ * @param {string} prodId the product id
+ */
+export const addToCart = (prodId) => {
+  const request = axios.post(`${USER_SERVER}/addToCart?productId=${prodId}`).then(res => res.data);
+
+
+  return {
+    type: ADD_TO_CART_USER,
     payload: request
   };
 };

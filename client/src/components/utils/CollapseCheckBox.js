@@ -93,8 +93,6 @@ export default class CollapseCheckBox extends Component {
             <ListItemText primary={item.name} className="collapse-items__title"/>
             <ListItemSecondaryAction>
               <CustomCheckbox
-                labelStyle={{ color: '#55efc4'}}
-                iconStyle={{ fill: '#55efc4'}}
                 onChange={() => this.handleCheckBoxToggle(item._id)}
                 checked={this.state.checked.indexOf(item._id) !== -1}
               />

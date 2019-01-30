@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const formidable = require('express-formidable');
+const cloudinary = require('cloudinary');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -11,6 +13,13 @@ const { User } = require('./models/user');
 const { Brand } = require('./models/brand');
 const { Type } = require('./models/type');
 const { Product } = require('./models/product');
+
+/** CLOUDINARY CONFIG */
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
+});
 
 /** DATABASE CONFIG */
 mongoose.Promise = global.Promise;
@@ -29,7 +38,7 @@ app.use(cookieParser());
 //////      PRODUCTS ROUTE
 /////////////////////////////////////////
 
-// Fetch products with criteria (POST)
+// *** Fetch products with criteria (POST)
 // Criterias:
 // {number}limit, {number}skip, {Object}filters(brands:[], types:[], prices:[])
 
@@ -59,6 +68,9 @@ app.post('/api/product/shop', (req, res) => {
     }
   }
 
+  // public route can only fetch published product
+  findArgs['publish'] = true;
+
   Product.find(findArgs)
     .populate('brand')
     .populate('type')
@@ -66,7 +78,6 @@ app.post('/api/product/shop', (req, res) => {
     .skip(skip)
     .limit(limit)
     .exec((err, products) => {
-      console.log(products);
       if (err) return res.status(400).send(err);
       res.status(200).json({
         size: products.length,
@@ -75,7 +86,7 @@ app.post('/api/product/shop', (req, res) => {
     });
 });
 
-// Get products with sorting, limiting
+// ***  Get products with sorting, limiting
 // sample: /api/product/products?sortBy=createdAt&order=desc&limit=4
 // sample: /api/product/products?sortBy=sold&order=desc&limit=4
 app.get('/api/product/products', (req, res) => {
@@ -95,7 +106,7 @@ app.get('/api/product/products', (req, res) => {
     });
 });
 
-// Get product by IDs
+// *** Get product by IDs (GET)
 // sample: /api/product/product_by_id?id=89jfkl,jkl81&type=array
 app.get('/api/product/product_by_id', (req, res) => {
   let type = req.query.type;
@@ -120,7 +131,7 @@ app.get('/api/product/product_by_id', (req, res) => {
     });
 });
 
-// Create new product (authentication and admin role is needed)
+// *** Create new product (authentication and admin role is needed)
 app.post('/api/product/product', auth, authAdmin, (req, res) => {
   const product = new Product(req.body);
   product.save((err, doc) => {
@@ -132,19 +143,47 @@ app.post('/api/product/product', auth, authAdmin, (req, res) => {
   });
 });
 
-// Get all products
-// app.get('/api/product/products', (req, res) => {
-//   Product.find({}, (err, products) => {
-//     if (err) return res.status(400).send(err);
-//     res.status(200).send(products);
-//   });
-// });
+// *** Upload files images to cloudinary (POST)
+app.post(
+  '/api/users/uploadimage',
+  auth,
+  authAdmin,
+  formidable(),
+  (req, res) => {
+    // cloudinary docs:
+    // https://cloudinary.com/documentation/image_transformations
+    cloudinary.uploader.upload(
+      req.files.file.path,
+      result => {
+        // console.log(result)
+        res.status(200).send({
+          public_id: result.public_id,
+          url: result.url
+        });
+      },
+      {
+        public_id: `${Date.now()}`,
+        resource_type: 'auto'
+      }
+    );
+  }
+);
+
+// ** *** Remove an image (GET)
+app.get('/api/users/removeimage', auth, authAdmin, (req, res) => {
+  let image_id = req.query.public_id;
+
+  cloudinary.uploader.destroy(image_id, (err, result) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).send('ok');
+  });
+});
 
 /////////////////////////////////////////
 //////      TYPE ROUTE
 /////////////////////////////////////////
 
-// Create new type (authentication and admin role is needed)
+// ** Create new type (authentication and admin role is needed)
 app.post('/api/product/type', auth, authAdmin, (req, res) => {
   const type = new Type(req.body);
   type.save((err, doc) => {
@@ -168,19 +207,19 @@ app.get('/api/product/types', (req, res) => {
 //////      BRAND ROUTE
 /////////////////////////////////////////
 
-// Create new brand (authentication and admin role is needed)
+// *** Create new brand (authentication and admin role is needed)
 app.post('/api/product/brand', auth, authAdmin, (req, res) => {
   const brand = new Brand(req.body);
   brand.save((err, doc) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
-      sucess: true,
+      success: true,
       brand: doc
     });
   });
 });
 
-// Get all brands
+// ** Get all brands
 app.get('/api/product/brands', (req, res) => {
   Brand.find({}, (err, brands) => {
     if (err) return res.status(400).send(err);
@@ -192,7 +231,7 @@ app.get('/api/product/brands', (req, res) => {
 //////      USER ROUTE
 /////////////////////////////////////////
 
-// Authenticate user
+// *** Authenticate user
 app.get('/api/users/auth', auth, (req, res) => {
   res.status(200).json({
     isAuth: true,
@@ -206,7 +245,7 @@ app.get('/api/users/auth', auth, (req, res) => {
   });
 });
 
-// Register user
+// *** Register user
 app.post('/api/users/register', (req, res) => {
   const user = new User(req.body);
 
@@ -220,7 +259,7 @@ app.post('/api/users/register', (req, res) => {
   });
 });
 
-// Login user
+// *** Login user
 app.post('/api/users/login', (req, res) => {
   // 1. find the email to check whether the user exist
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -251,7 +290,7 @@ app.post('/api/users/login', (req, res) => {
   });
 });
 
-// Logout user - only authenticated user can logout
+// *** Logout user - only authenticated user can logout
 app.get('/api/users/logout', auth, (req, res) => {
   // access database to unset the token
   User.findOneAndUpdate({ _id: req.user._id }, { token: '' }, (err, doc) => {
@@ -259,6 +298,60 @@ app.get('/api/users/logout', auth, (req, res) => {
     return res.status(200).json({
       logoutSuccess: true
     });
+  });
+});
+
+// *** Add product to cart
+// sample: /api/users/addToCart?productId=qwe8123984uklj
+app.post('/api/users/addToCart', auth, (req, res) => {
+  const userId = req.user._id;
+  const prodId = req.query.productId;
+
+  // get the user data
+  User.findOne({ _id: userId }, (err, doc) => {
+    let duplicate = false;
+
+    // check whether the product is existed
+    // case 1) if it is, increase the quantity by 1
+    // case 2) otherwise, add product to cart
+    doc.cart.forEach(item => {
+      if (item.id == prodId) {
+        duplicate = true;
+      }
+    });
+
+    // case 1) increase the existing product quantity by 1
+    if (duplicate) {
+      User.findOneAndUpdate(
+        { _id: userId, 'cart.id': mongoose.Types.ObjectId(prodId) },
+        { $inc: { 'cart.$.quantity': 1 } },
+        { new: true },
+        (err, doc) => {
+          if (err) return res.json({ success: false, err });
+          res.status(200).json(doc.cart);
+        }
+      );
+    } else {
+      // case 2) product is new in cart
+      User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $push: {
+            cart: {
+              id: mongoose.Types.ObjectId(prodId),
+              quantity: 1,
+              date: Date.now()
+            }
+          }
+        },
+        // get updated document back instead of original after created
+        { new: true },
+        (err, doc) => {
+          if (err) return res.json({ success: false, err });
+          res.status(200).json(doc.cart);
+        }
+      );
+    }
   });
 });
 

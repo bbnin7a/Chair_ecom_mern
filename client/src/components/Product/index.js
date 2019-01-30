@@ -8,17 +8,17 @@ import {
   getProductDetail,
   clearProductDetail
 } from '../../actions/productsActions';
+import { addToCart } from '../../actions/userActions'
 
 class ProductPage extends Component {
   componentDidMount() {
     // get the query product id
     const prodId = this.props.match.params.prodId;
     this.props.dispatch(getProductDetail(prodId)).then(res => {
-
       // check whether the given id is exist in list
       // if not exist, redirect to home route
       if (!this.props.products.prodDetail) {
-        this.props.history.push('/')
+        this.props.history.push('/');
       }
     });
   }
@@ -28,7 +28,10 @@ class ProductPage extends Component {
     this.props.dispatch(clearProductDetail());
   }
 
-  addToCartHandler = prodId => {};
+  // add product to cart
+  addToCartHandler = prodId => {
+    this.props.dispatch(addToCart(prodId))
+  };
 
   render() {
     const { prodDetail } = this.props.products;

@@ -8,7 +8,6 @@ import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
 const ProductInfo = props => {
   const { detail } = props;
-  console.log(detail);
 
   // render product's shipping and availablility info
   const showProdTags = () => (
@@ -48,7 +47,7 @@ const ProductInfo = props => {
         <Button
           type="add_to_cart_link"
           runAction={() => {
-            console.log('add to cart');
+            props.addToCart(detail._id);
           }}
         />
       </div>
