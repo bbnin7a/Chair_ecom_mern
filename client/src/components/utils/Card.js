@@ -4,11 +4,14 @@
  */
 
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../utils/Button';
 import TextTruncate from 'react-text-truncate';
-import { Link } from 'react-router-dom';
 
-export default class Card extends Component {
+import { connect } from 'react-redux'
+import { addToCart } from '../../actions/productsActions'
+
+class Card extends Component {
   // render card images
   renderCardImage(images) {
     // if multiple images exist, return the first image
@@ -80,3 +83,11 @@ export default class Card extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user  
+  }
+}
+
+export default connect()(Card)

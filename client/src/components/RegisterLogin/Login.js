@@ -95,7 +95,7 @@ class Login extends Component {
             change={element => this.updateForm(element)}
           />
 
-          <button onClick={event => this.submitForm(event)}>log in</button>
+          <button onClick={event => this.submitForm(event)}>login</button>
 
           {this.state.formError ? (
             <div className="error-label mt-sm">

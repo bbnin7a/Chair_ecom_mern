@@ -55,7 +55,7 @@ class Header extends Component {
   };
 
   // render the special cart link with qty indicator
-  cartLink = (item, i) => {
+  renderCartLink = (item, i) => {
     const user = this.props.user.userData;
 
     return (
@@ -67,7 +67,7 @@ class Header extends Component {
   };
 
   // render default link
-  defaultLink = (item, i) =>
+  renderDefaultLink = (item, i) =>
     // if the link is logout
     item.name === 'Logout' ? (
       <div
@@ -108,9 +108,9 @@ class Header extends Component {
     return list.map((item, i) => {
       // differentiate the links
       if (item.name !== 'My Cart') {
-        return this.defaultLink(item, i);
+        return this.renderDefaultLink(item, i);
       } else {
-        return this.cartLink(item, i);
+        return this.renderCartLink(item, i);
       }
     });
   };
@@ -120,13 +120,13 @@ class Header extends Component {
       <header className="bck-b__light">
         <div className="header__container container">
           <div className="header__left">
-            <div className="header__logo"><Link to="/">CHAIR</Link></div>
+            <div className="header__logo">
+              <Link to="/">CHAIR</Link>
+            </div>
           </div>
           <div className="header__right">
-            <div className="header__top">{this.showLinks(this.state.user)}</div>
-            <div className="header__bottom">
-              {this.showLinks(this.state.page)}
-            </div>
+            <div className="nav">{this.showLinks(this.state.page)}</div>
+            <div className="account">{this.showLinks(this.state.user)}</div>
           </div>
           <div />
         </div>
