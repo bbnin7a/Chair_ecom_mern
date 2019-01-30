@@ -90,6 +90,7 @@ class FileUpload extends Component {
   }
 
   render() {
+    console.log(this.state.uploadedFiles)
     const {uploading} = this.state
     return (
       <div>

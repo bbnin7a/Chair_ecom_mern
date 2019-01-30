@@ -1,5 +1,6 @@
 const { User } = require('../models/user');
 
+// check normal user
 let auth = (req, res, next) => {
   let token = req.cookies.c_auth;
 
