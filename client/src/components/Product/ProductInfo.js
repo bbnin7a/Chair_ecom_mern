@@ -44,12 +44,15 @@ const ProductInfo = props => {
     <div className="product-detail__actions">
       <div className="price">$ {detail.price}</div>
       <div className="cart">
-        <Button
+        { props.authStatus ?
+          <Button
           type="add_to_cart_link"
           runAction={() => {
             props.addToCart(detail._id);
           }}
         />
+        : <div>Please login to Add your item to cart</div>
+        }
       </div>
     </div>
   );

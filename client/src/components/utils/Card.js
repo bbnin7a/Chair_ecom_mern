@@ -5,11 +5,12 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import Button from '../utils/Button';
 import TextTruncate from 'react-text-truncate';
 
-import { connect } from 'react-redux'
-import { addToCart } from '../../actions/userActions'
+import { connect } from 'react-redux';
+import { addToCart } from '../../actions/userActions';
 
 class Card extends Component {
   // render card images
@@ -22,6 +23,11 @@ class Card extends Component {
       return '/images/image_not_available.png';
     }
   }
+
+  // redirect user to login
+  renderLoginPage = () => {
+    this.props.history.push('/register_login');
+  };
 
   render() {
     const props = this.props;
@@ -49,7 +55,12 @@ class Card extends Component {
                 truncateText=" ..."
                 text={props.description}
                 textTruncateChild={
-                  <Link to={`/product_detail/${props._id}`} className="read-more">Read more</Link>
+                  <Link
+                    to={`/product_detail/${props._id}`}
+                    className="read-more"
+                  >
+                    Read more
+                  </Link>
                 }
               />
             </div>
@@ -71,13 +82,11 @@ class Card extends Component {
               <Button
                 type="bag_link"
                 runAction={() => {
-
-                  // only autheticated user is able 
+                  // only autheticated user is able
                   // to add product to cart
-                  props.user.userData.isAuth?
-                    this.props.dispatch(addToCart(props._id))
-                  :
-                  console.log('Please login')
+                  props.user.userData.isAuth
+                    ? this.props.dispatch(addToCart(props._id))
+                    : this.renderLoginPage();
                 }}
               />
             </div>
@@ -88,10 +97,10 @@ class Card extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    user: state.user  
-  }
-}
+    user: state.user
+  };
+};
 
-export default connect(mapStateToProps)(Card)
+export default connect(mapStateToProps)(withRouter(Card));

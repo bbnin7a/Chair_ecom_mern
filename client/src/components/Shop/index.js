@@ -22,7 +22,7 @@ import CollapseRadio from '../utils/CollapseRadio';
 class Shop extends Component {
   state = {
     grid: '',
-    limit: 3,
+    limit: 6,
     skip: 0,
     filters: {
       brand: [],

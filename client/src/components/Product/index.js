@@ -46,6 +46,7 @@ class ProductPage extends Component {
               </div>
               <div className="product-detail__right">
                 <ProductInfo
+                  authStatus = {this.props.authStatus}
                   detail={prodDetail}
                   addToCart={prodId => this.addToCartHandler(prodId)}
                 />
@@ -62,7 +63,8 @@ class ProductPage extends Component {
 
 const mapStateTopProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    authStatus: state.user.userData.isAuth
   };
 };
 
