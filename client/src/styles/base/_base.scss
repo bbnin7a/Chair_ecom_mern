@@ -20,7 +20,7 @@ a {
 
 // container
 .container {
-  width: 110rem;
+  max-width: 110rem;
   margin: 0 auto;
 }
 
@@ -64,15 +64,3 @@ select {
   width: 100%;
   margin: 1rem 0 0 0;
 }
-
-// button {
-//   cursor: pointer;
-// }
-
-// button:disabled {
-//   cursor: default;
-// }
-
-// .is-active {
-//   font-weight: bold;
-// }

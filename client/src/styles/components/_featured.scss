@@ -1,7 +1,9 @@
 .featured__container {
+  width: 100%;
 }
 
 .featured__image {
+  width: 100%;
   position: relative;
   background-size: cover !important;
   background-position: center left !important;
@@ -30,4 +32,14 @@
   font-size: 5rem;
   font-weight: 300;
   margin-top: 1rem;
+}
+
+@media (max-width: $tablet-breakpoint) {
+  .featured__title {
+    font-size: 6rem;
+  }
+
+  .featured__sub-title {
+    font-size: 4rem;
+  }
 }

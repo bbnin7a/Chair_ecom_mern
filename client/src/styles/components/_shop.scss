@@ -1,12 +1,14 @@
 .shop__wrapper {
   display:flex;
+  padding: 0 1.5rem;
 
   &__left {
-    flex-grow: 1;
+    flex: 1;
+    min-width: 20rem;
   }
 
   &__right {
-    width: 80rem;
+    flex: 4;
   }
 }
  

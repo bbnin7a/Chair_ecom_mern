@@ -17,6 +17,7 @@ header {
   color: white;
   font-size: 4rem;
   padding: 1.1rem 0rem;
+  padding-left: 1rem;
 }
 
 .header__right {
@@ -62,11 +63,10 @@ header {
   align-items: center;
 
   a {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   span {
-    // position: absolute;
     background: $red-orange;
     height: 2.4rem;
     width: 2.4rem;

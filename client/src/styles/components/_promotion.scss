@@ -35,3 +35,13 @@
   margin-top: 1rem;
   margin: 0 auto;
 }
+
+@media (max-width: $tablet-breakpoint) {
+  .promotion__title {
+    font-size: 5rem;
+  }
+
+  .promotion__sub-title {
+    font-size: 3rem;
+  }
+}

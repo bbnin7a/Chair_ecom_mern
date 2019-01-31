@@ -16,15 +16,13 @@ const CardBlock = props => {
       : null;
 
   return (
-    <div className="card-block--shop">
-      <div className="">
+    <div className="card-block-shop">
         {props.list ? (
           props.list.length === 0 ? (
             <div className="card-block__no-result">Sorry, no results</div>
           ) : null
         ) : null}
         {renderCards(props.list)}
-      </div>
     </div>
   );
 };

@@ -4,6 +4,12 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/userActions';
 
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faArrowCircleRight from '@fortawesome/fontawesome-free-solid/faArrowCircleRight'
+import faArrowAltCircleLeft from '@fortawesome/fontawesome-free-solid/faArrowAltCircleLeft'
+import faShoppingBasket from '@fortawesome/fontawesome-free-solid/faShoppingBasket'
+import faUser from '@fortawesome/fontawesome-free-solid/faUser'
+
 class Header extends Component {
   // ** navigation links
   // if public is false, it means only authenticated user can see this links
@@ -24,25 +30,34 @@ class Header extends Component {
       {
         name: 'My Cart',
         linkTo: '/user/cart',
-        public: false
+        public: false,
+        icon: faShoppingBasket
       },
       {
         name: 'My Account',
         linkTo: '/user/dashboard',
-        public: false
+        public: false,
+        icon: faUser
       },
       {
         name: 'Logout',
         linkTo: '/user/logout',
-        public: false
+        public: false,
+        icon: faArrowAltCircleLeft
       },
       {
         name: 'Login',
         linkTo: '/register_login',
-        public: true
+        public: true,
+        icon: faArrowCircleRight
       }
     ]
   };
+
+  renderIcon = (icon) => (
+    <FontAwesomeIcon icon={icon} />
+  )
+
 
   // logout a user when user hit 'Logout'
   logoutHandler = () => {
@@ -76,7 +91,7 @@ class Header extends Component {
           this.caculateCartItems(user.cart)
 
          : 0}</span>
-        <Link to={item.linkTo}>{item.name}</Link>
+        <Link to={item.linkTo}>{item.icon ? this.renderIcon(item.icon) : null} {item.name}</Link>
       </div>
     );
   };
@@ -90,12 +105,12 @@ class Header extends Component {
         key={i}
         onClick={() => this.logoutHandler()}
       >
-        {item.name}
+        {item.icon ? this.renderIcon(item.icon) : null} {item.name}
       </div>
     ) : (
       // default link
       <Link to={item.linkTo} key={i}>
-        {item.name}
+        {item.icon ? this.renderIcon(item.icon) : null} {item.name}
       </Link>
     );
 

@@ -32,7 +32,7 @@ class Card extends Component {
   render() {
     const props = this.props;
     return (
-      <div className={`card-item__wrapper ${props.grid}`}>
+      <div className={`card-item__wrapper ${props.grid ? props.grid : ''}`}>
         <Link to={`/product_detail/${props._id}`}>
           <div
             className="card-item__image"

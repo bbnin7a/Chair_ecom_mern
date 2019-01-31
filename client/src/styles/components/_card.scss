@@ -11,13 +11,30 @@
   }
 
   &__card-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    
+    @media (max-width: $desktop-breakpoint) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+   
+    @media (min-width: $phone-breakpoint) and (max-width: $tablet-breakpoint){
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+
   }
 }
 
-.card-block--shop .card-item__wrapper {
+.card-block-shop .card-item__wrapper {
   float: left;
   width: 33.33%;
   margin-bottom: 2rem;
+
+}
+
+@media (max-width: 80rem) {
+  .card-block-shop .card-item__wrapper {
+    width: 50%;
+  }
 }

@@ -1,6 +1,5 @@
 .card-item__wrapper {
-  flex-grow: 1;
-  width: 25%;
+  width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
   position: relative;
@@ -12,7 +11,6 @@
   height: 28rem;
   background-position: center !important;
   background-size: cover !important;
-  // border: 1px solid $white-5;
 }
 
 .card-tiem__tags {
@@ -70,12 +68,16 @@
 
   .card-item__image {
     width: 26rem;
-    height: 211px;
+    height: 25rem;
     border: none;
+
+    @media (max-width: 80rem) {
+      width: 16rem;
+    }
   }
 
   .card-item__container {
-    width: 50rem;
+    flex-grow: 1;
     border: 1px solid $white-3;
   }
 
