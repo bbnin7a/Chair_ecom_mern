@@ -1,4 +1,5 @@
-require('dotenv').config({path: __dirname + '/.env'})
+require('dotenv').config({ path: __dirname + '/.env' });
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -10,13 +11,14 @@ const app = express();
 const mongoose = require('mongoose');
 
 /** DATABASE CONFIG */
-mongoose.connect(process.env.MONGODB_URI)
-.then(connection => {
-  console.log('Connected to MongoDB')
-})
-.catch(err => {
-  console.log('error message', err)
-});
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(connection => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(err => {
+    console.log('error message', err);
+  });
 mongoose.Promise = global.Promise;
 
 /** MIDDLEWARE */
@@ -29,12 +31,12 @@ app.use(express.static('client/build'));
 app.use('/api/users', userRoutes);
 app.use('/api/product', productRoutes);
 
-//** DEFAULT ROUTE IN PRODUCTION */
+// //** DEFAULT ROUTE IN PRODUCTION */
 if (process.env.NODE_ENV === 'production') {
-  const path = require('path');
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../client/build/index.html'));
-  });
+app.get('*', (req, res) => {
+  const index = path.join(__dirname, '../client', 'build', 'index.html');
+  res.sendFile(index);
+});
 }
 
 /** LISTENING PORT */
