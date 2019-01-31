@@ -32,12 +32,12 @@ app.use('/api/users', userRoutes);
 app.use('/api/product', productRoutes);
 
 // //** DEFAULT ROUTE IN PRODUCTION */
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
 app.get('*', (req, res) => {
   const index = path.join(__dirname, '../client', 'build', 'index.html');
   res.sendFile(index);
 });
-}
+// }
 
 /** LISTENING PORT */
 const port = process.env.PORT || 3001;
